@@ -1,0 +1,28 @@
+module Data_Memory(clk, address, write_data, write_memory, read_data);
+
+    input clk;
+    input [31:0] address; // ALU_result
+    input [31:0] write_data; // rt_data
+    input write_memory;
+    output reg [31:0] read_data;
+    
+    reg [31:0] MEMORY[0:255];
+    
+    integer i;
+    
+    initial begin
+    read_data <= 0;
+    for (i = 0; i < 256;, i = i + 1) begin
+        MEMORY[i] = i;
+        end
+    end
+    
+    always @ (posedge clk)
+        begin
+            if (write_memory == 1)
+                MEMORY[address] <= write_data;
+    
+    
+    end
+    
+endmodule
