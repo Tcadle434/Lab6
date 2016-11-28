@@ -8,16 +8,32 @@ module main(rd_data);
     wire [4:0] rd;
     wire [5:0] func;
     wire [5:0] op; //optional for this lab b/c op is always 0 for r-format.
-    //wire [4:0] shamt;
     wire [4:0] shamt;
     wire [3:0] aluc;
     wire w_enable;
     wire clk;
     wire rst;
     wire [31:0]rs_data;
-    wire [31:0]rt_data;
-    wire [31:0] mux_out; // one for shifts
-    output [31:0]rd_data;
+    wire [31:0]rt_data
+    // wire [31:0] mux_out; // one for shifts
+    wire [31:0]rd_data;
+    wire [31:0] left_mux_out;
+    wire [31:0] top_mux_out;
+    wire [31:0] bottom_mux_out;
+    wire [31:0] right_mux_out;
+    wire m2reg;
+    wire [1:0] pcsrc;
+    wire write_memory;
+    wire shift
+    wire aluimm;
+    wire regrt;
+    wire sext;
+    wire [15:0] imm;
+    wire [25:0] addr;
+    wire zero;
+    wire [31:0] datamem_out;
+    wire result;
+    
     
     testbench testbench_tb(clk);
     program_counter program_counter_tb(clk, rst, pc);
