@@ -1,0 +1,10 @@
+module Mux_2_1(in0, in1, sel, out);
+
+    input in0, in1, sel;
+    output out;
+    tri out;
+    bufif1 (out, in0, sel);
+    bufif0 (out, in1, sel);
+    
+endmodule
+
