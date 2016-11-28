@@ -1,0 +1,43 @@
+module instruction_memory (pc, rs, rt, rd, func, op);
+    input [31:0] pc;
+    output [4:0] rs;
+    output [4:0] rt;
+    output [4:0] rd;
+    output [5:0] func;
+    output [5:0] op;
+    output [4:0] shamt;
+    output [15:0] imm;
+    output [25:0] addr;
+    
+    reg [31:0] instruction;
+    
+    
+    
+    
+    always @ (pc)
+    begin
+    
+    if (pc == 0)
+        instruction = 32'h01244022;
+        
+    else if (pc == 4)
+        instruction = 32'h01493025;
+        
+    else if (pc == 8)
+        instruction = 32'h000543c0;
+        
+    end
+    
+    assign op = instruction[31:26]; 
+    assign rs = instruction[25:21];
+    assign rt = instruction[20:16];
+    assign rd = instruction[15:11];
+    assign shamt = instruction[10:6];
+    assign func = instruction[5:0];
+    
+    assign imm = instruction[15:0];
+    
+    assign addr = instruciton[25:0];
+    
+    
+endmodule
