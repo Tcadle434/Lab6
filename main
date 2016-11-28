@@ -1,4 +1,5 @@
 
+
 module main(rd_data);
 
 
@@ -29,10 +30,13 @@ module main(rd_data);
     wire regrt;
     wire sext;
     wire [15:0] imm;
+    wire [31:0] imm_extend;
+    wire [31:0] imm_extend_shift;
     wire [25:0] addr;
+    wire [25:0] addr_shift;
     wire zero;
     wire [31:0] datamem_out;
-    wire result;
+    output [31:0] result;
     
     
     testbench testbench_tb(clk);
