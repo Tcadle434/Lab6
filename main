@@ -1,0 +1,33 @@
+
+module main(rd_data);
+
+
+    wire [31:0] pc;
+    wire [4:0] rs;
+    wire [4:0] rt;
+    wire [4:0] rd;
+    wire [5:0] func;
+    wire [5:0] op; //optional for this lab b/c op is always 0 for r-format.
+    //wire [4:0] shamt;
+    wire [4:0] shamt;
+    wire [3:0] aluc;
+    wire w_enable;
+    wire clk;
+    wire rst;
+    wire [31:0]rs_data;
+    wire [31:0]rt_data;
+    wire [31:0] mux_out; // one for shifts
+    output [31:0]rd_data;
+    
+    testbench testbench_tb(clk);
+    program_counter program_counter_tb(clk, rst, pc);
+    instruction_memory instruction_memory_tb(pc, rs, rt, rd, func, op);
+    ALU_control ALU_control_tb (func, op, aluc, w_enable);
+    Mux_2_1 Mux_2_1_tb (rs_data, shamt, mux_out);
+    ALU1 ALU1_tb (aluc, mux_out, rt_data, rd_data);
+    reg_file reg_file_tb (clk, rst, rs, rt, rd, rd_data, w_enable, rs_data, rt_data);
+
+    
+    
+
+endmodule
