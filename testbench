@@ -1,0 +1,13 @@
+module testbench(clk);
+    output reg clk;
+    
+    always begin
+    
+    clk = 1'b0;
+    #5clk = 1'b1;
+    #5clk = 1'b0;
+    
+    #5;
+    end
+    
+endmodule
