@@ -1,0 +1,26 @@
+module ALU_control(func, op, aluc, we);
+       input [5:0] func;  
+       input [5:0] op;
+       //input [4:0] shamt;
+       output reg [3:0] aluc;
+       output reg we;
+       
+       parameter HIGH = 1'd1;
+       
+     always @ (*) begin
+        case (func)
+            
+            6'b100010: aluc <=4; //subtract
+            6'b100101: aluc <= 5; // or
+            6'b000000: aluc <= 3; // shift
+            default: aluc <= 15;
+            
+        endcase
+        //assign we <= HIGH;
+     end
+    
+     
+            
+
+endmodule
+
