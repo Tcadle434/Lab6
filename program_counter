@@ -1,0 +1,39 @@
+module program_counter(clk, rst, pcsrc, BranchAddr, RegAddr, JumpAddr, pc);
+
+    input clk;
+    input rst;
+    input [1:0] pcsrc;
+    input [15:0] BranchAddr;
+    input [31:0] RegAddr;
+    input [25:0] JumpAddr;
+    output reg [31:0] pc;
+    
+    parameter INCREMENT_AMOUNT = 32'd4;
+    
+    wire [31:0] pc_4;
+    
+    assign pc_4 = pc + INCREMENT_AMOUNT;
+    
+    initial begin
+    pc <= 0;
+    end
+        
+    always @(posedge clk or posedge rst)
+        begin
+   
+            if (rst)
+                pc <= 0;
+
+            else 
+                begin
+                    case (pcsrc)
+                        2'b00: pc <= pc_4;
+                        2'b01: pc <= pc_4 + {{14{BranchAddr[15]}}, BranchAddr[15:0], 2'b00}; //Branch Address
+                        2'b10: pc <= RegAddr; // Register Address
+                        2'b11: pc <= {pc_4[31:28], JumpAddr, 2'b00}; // Jump Address
+                        default: pc <= pc_4;
+                    endcase
+                end
+        end
+
+endmodule
