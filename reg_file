@@ -1,0 +1,36 @@
+module reg_file(clk, rst, rs, rt, rd, rd_data, w_enable, rs_data, rt_data);
+    input clk, rst, w_enable;
+    input [4:0] rs, rt, rd;
+    input [31:0] rd_data;
+    output [31:0] rs_data, rt_data;
+    reg [31:0] rf[1:31];
+    
+    initial begin
+    rf[0] = 8'h00000000;
+    rf[1] = 8'hA00000AA;
+    rf[2] = 8'h10000011;
+    rf[3] = 8'h20000022;
+    rf[4] = 8'h30000033;
+    rf[5] = 8'h40000044;
+    rf[6] = 8'h50000055;
+    rf[7] = 8'h60000066;
+    rf[8] = 8'h70000077;
+    rf[9] = 8'h80000088;
+    rf[10] = 8'h90000099;
+    end
+    
+    assign rs_data = (rs == 0)? 0: rf[rs];
+    assign rt_data = (rt == 0)? 0: rf[rt];
+    
+    integer i;
+    
+    always @(posedge clk or negedge rst)
+    begin
+        if (!rst)
+            for (i = 1; i < 32; i = i + 1)
+                rf[i] <= 0;
+        else
+            if ((rd != 0) && w_enable)
+                rf[rd] <= rd_data;
+    end
+endmodule
