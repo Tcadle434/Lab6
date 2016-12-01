@@ -1,0 +1,93 @@
+module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm, w_enable, regrt, sext);
+
+       input [31:0] instruction;  
+       input zero;
+       output reg m2reg;
+       output reg [1:0] pcsrc;
+       output reg w_mem;
+       output reg [3:0] aluc;
+       output reg shift;
+       output reg aluimm;
+       output reg w_enable;
+       output reg regrt;
+       output reg sext;
+       
+       reg [25:0] addr;
+       reg [15:0] imm;
+       reg [4:0] rs;
+       reg [4:0] rt;
+       reg [4:0] rd;
+       reg [4:0] shamt;
+       reg [5:0] func;
+       
+       wire [5:0] op;
+       
+       assign op = instruction[31:26];
+
+     always @ (instruction) begin
+     
+          if (op == 6'b000000) //r-format instructions
+            begin
+            
+              addr = 26'd0;
+              imm = 16'd0;
+              rs = instruction [25:21];
+              rt = instruction [20:16];
+              rd = instruction [15:11];
+              shamt = instruction [10:6];
+              func = instruction [5:0];
+            
+            end
+            
+            else if (op == 6'b000010 || op = 6'b000011) // j-format
+              begin
+              
+              addr = instruction [25:0];
+              imm = 16'd0;
+              rs = 5'd0;
+              rt = 5'd0;
+              rd = 5'd0;
+              shamt = 5'd0;
+              func = 6'd0; 
+              
+             end
+             
+             else // i-format
+             begin
+             
+              addr = 26'd0;
+              imm = instruction [15:0]
+              rs = instruction [25:21];
+              rt = instruction [20:16];
+              rd = 5'd0;
+              shamt = 5'd0;
+              func = 6'd0;
+              
+              end
+             
+            
+             
+                
+              
+     
+            6'b100010: aluc <=4; //subtract
+
+            6'b100101: aluc <= 5; // or
+
+            6'b000000: aluc <= 3; // shift
+
+            default: aluc <= 15;     
+
+
+
+     end
+
+    
+
+     
+
+            
+
+
+
+endmodule
