@@ -36,10 +36,9 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
               rd = instruction [15:11];
               shamt = instruction [10:6];
               func = instruction [5:0];
+             end
             
-            end
-            
-            else if (op == 6'b000010 || op = 6'b000011) // j-format
+            else if (op == 6'b000010 || op == 6'b000011) // j-format
               begin
               
               addr = instruction [25:0];
@@ -52,7 +51,7 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
               
              end
              
-             else // i-format
+             else // i-format             
              begin
              
               addr = 26'd0;
@@ -65,7 +64,48 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
               
               end
              
+            // now we need to find the values of the control signals depending on the instruction
             
+            //m2reg
+            
+            if (op == 1000011) // lw
+            begin
+              m2reg = 1;
+              
+           else
+              m2reg = 0;
+              
+              end
+              
+            //pcsrc
+            
+            if (op == 6'b000000) // jr
+              pcsrc = 2'b10;
+              
+            else if (op == 000100 && zero == 1) //beq, z is high
+              pcsrc = 2'b01;
+              
+            else if (op == 000101 && zero == 0) // bne, z is low
+              pcsrc = 2'b01;
+              
+            else if (op == 000010 || op == 000011) // j or jal
+              pcsrc = 2'b11;
+              
+            else
+              pcsrc = 2'b00;
+              
+           // w_mem
+
+              if (op == 101011) //sw
+                     w_mem = 1;
+              else
+                     w_mem = 0;
+            
+            
+            //aluc
+            
+            
+              
              
                 
               
