@@ -91,7 +91,7 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
               
             else if (op == 6'b000010 || op == 6'b000011) // j or jal
               pcsrc = 2'b11;
-              
+               
             else
               pcsrc = 2'b00;
               
@@ -112,7 +112,24 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
                  if (op == 6'b000000)
                      begin
                             case (func)
-                                   6'b1
+                                   6'b1 // need to take all different function codes and compute aluc value
+                                   
+                                   
+           
+           //shift
+           
+           if (op == 6'b000000)
+              begin  
+                     if (func == 6'b000000 || func == 6'b000010 || func == 6'b000011)
+                            shift = 1;
+                     else
+                            shift = 0;
+              end
+            else 
+              shift = 0;
+              
+           
+           //aluimm
             
             
               
