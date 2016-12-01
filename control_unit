@@ -65,14 +65,15 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
               end
              
             // now we need to find the values of the control signals depending on the instruction
-            
+
+
             //m2reg
             
-            if (op == 1000011) // lw
+            if (op == 61000011) // lw
             begin
               m2reg = 1;
               
-           else
+          else
               m2reg = 0;
               
               end
@@ -82,13 +83,13 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
             if (op == 6'b000000) // jr
               pcsrc = 2'b10;
               
-            else if (op == 000100 && zero == 1) //beq, z is high
+            else if (op == 6'b000100 && zero == 1) //beq, z is high
               pcsrc = 2'b01;
               
-            else if (op == 000101 && zero == 0) // bne, z is low
+            else if (op == 6'b000101 && zero == 0) // bne, z is low
               pcsrc = 2'b01;
               
-            else if (op == 000010 || op == 000011) // j or jal
+            else if (op == 6'b000010 || op == 6'b000011) // j or jal
               pcsrc = 2'b11;
               
             else
@@ -96,13 +97,22 @@ module control_unit(instruction, zero, m2reg, pcsrc, w_mem, aluc, shift, aluimm,
               
            // w_mem
 
-              if (op == 101011) //sw
+              if (op == 6'b101011) //sw
                      w_mem = 1;
               else
                      w_mem = 0;
             
             
             //aluc
+            
+            end // this is the end of the big always block
+            
+            always @ (*)
+              begin
+                 if (op == 6'b000000)
+                     begin
+                            case (func)
+                                   6'b1
             
             
               
